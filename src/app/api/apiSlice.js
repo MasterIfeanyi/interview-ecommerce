@@ -1,10 +1,11 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react"
-import { setCredentials, logOut } from "../../features/auth/authSlice"
+import { setCredentials, logOut } from "../../feature/auth/authSlice"
 
 // attach the accessToken to our request
 const baseQuery = fetchBaseQuery({
     // back-end url
-    baseUrl: "https://ifeanyi-bank-backend.glitch.me/", 
+    // baseUrl: "https://ifeanyi-bank-backend.glitch.me/", 
+    baseUrl: "http://localhost:4000", 
     // send cookie with every request
     credentials: "include", 
     prepareHeaders: (headers, { getState }) => {
@@ -53,7 +54,7 @@ export const apiSlice = createApi({
     // wrap baseQuery with baseQueryReauth
     baseQuery: baseQueryWithReauth,
 
-    tagTypes: ["Account", "History"],
+    tagTypes: ["Products", "Profile"],
 
     // inject api endpoints
     endpoints: builder => ({})

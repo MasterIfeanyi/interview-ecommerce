@@ -1,9 +1,12 @@
 import { Routes, Route, Navigate } from "react-router-dom"
 import Layout from './Layout/Layout';
-import RequireAuth from './features/auth/RequireAuth';
-import Content from './components/Content';
-import Convert from './components/Convert';
-import MarketWatch from './components/MarketWatch';
+import RequireAuth from './feature/auth/RequireAuth';
+import Login from './feature/auth/Login';
+import Register from './feature/register/Register';
+import Product from './feature/products/Product';
+import Profile from './feature/profile/Profile';
+import Update from './feature/profile/Update';
+import Home from "./components/Home";
 
 function App() {
 
@@ -17,10 +20,9 @@ function App() {
 
         {/* protected routes */}
         <Route element={<RequireAuth />}>
-          <Route path="profile" element={<Bank />} />
-          <Route path="history/:id" element={<History />} />
-          <Route path="deposit/:id" element={<Deposit />} />
-          <Route path="withdraw/:id" element={<Withdraw />} />
+          <Route path="profile/:id" element={<Profile />} />
+          <Route path="products" element={<Product />} />
+          <Route path="update/:id" element={<Update />} />
         </Route>
 
         {/* catch all */}

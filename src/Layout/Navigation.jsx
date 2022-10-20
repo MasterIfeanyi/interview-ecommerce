@@ -1,16 +1,36 @@
 import React from 'react'
 import { Container, Nav, Navbar } from "react-bootstrap"
-import { NavLink } from "react-router-dom"
-import useAuth from "../hooks/useAuth"
+import { NavLink, useNavigate } from "react-router-dom"
+import { logOut } from '../feature/auth/authSlice'
+import { useLogoutMutation } from './logoutApiSlice'
+import { useDispatch } from 'react-redux'
 
 const Navigation = () => {
 
-    const { logout } = useAuth();
+
+    const dispatch = useDispatch();
+
+    const [signOff] = useLogoutMutation()
+
+    const navigate = useNavigate();
+
+
+    const signOut = async () => {
+
+        try {
+            console.log("click");
+            await signOff().unwrap();
+            dispatch(logOut());
+            navigate("/");
+        } catch (e) {
+            console.log(e.message);
+        }
+    }
+
 
 
 
     return (
-
         <Navbar bg="primary" variant="dark" expand="lg" sticky="top" className="myNavBar">
             <Container>
                 <Navbar.Brand href="#home">Welcome</Navbar.Brand>
@@ -23,8 +43,20 @@ const Navigation = () => {
                             }
                         }}
                         >Home</NavLink>
+                        <NavLink to="/profile" className="navLink" style={({ isActive }) => {
+                            return {
+                                color: isActive ? "red" : "white"
+                            }
+                        }}
+                        >Profile</NavLink>
+                        <NavLink to="/products" className="navLink" style={({ isActive }) => {
+                            return {
+                                color: isActive ? "red" : "white"
+                            }
+                        }}
+                        >Products</NavLink>
                     </Nav>
-                    <button className="navLink btn btn-primary logOut" onClick={logout}>Log Out</button>
+                    <button className="navLink btn btn-primary logOut" onClick={signOut}>Log Out</button>
                 </Navbar.Collapse>
             </Container>
         </Navbar>

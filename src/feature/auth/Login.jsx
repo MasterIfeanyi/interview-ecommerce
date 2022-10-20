@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../auth/authSlice";
-import { useLoginMutation } from "./authApiSlice"
+import { useLoginMutation } from "./authApiSlice";
+import jwt_decode from "jwt-decode";
 
 const Login = () => {
 
@@ -19,7 +20,7 @@ const Login = () => {
     const errRef = useRef()
 
     // state for error, password, username
-    const [email, setEmail] = useState('');
+    const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
 
@@ -31,27 +32,29 @@ const Login = () => {
     // clear the error message if username and password changes
     useEffect(() => {
         setErrMsg('')
-    }, [email, pwd]);
+    }, [user, pwd]);
 
 
 
     // handle User input
-    const handleEmailInput = (e) => setEmail(e.target.value)
+    const handleUserInput = (e) => setUser(e.target.value)
     const handlePwdInput = (e) => setPwd(e.target.value)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!email && !pwd) return
+        if (!user && !pwd) return
         // if button enabled with JS Hack
         try {
             // send information to backend
-            const userData = await login({ email, pwd }).unwrap();
+            const userData = await login({ user, pwd }).unwrap();
             // save accessToken to global store
-            dispatch(setCredentials({ ...userData, email }))
+            dispatch(setCredentials({ ...userData, user }));
+            const decoded = jwt_decode(userData.accessToken);
+            console.log(decoded.UserInfo.id);
             // clear the form
-            setEmail("");
+            setUser("");
             setPwd("");
-            navigate("/profile");
+            navigate(`/profile/${decoded.UserInfo.id}`);
         } catch (err) {
             if (!err?.originalStatus) {
                 setErrMsg('No Server Response'); // server is off
@@ -80,27 +83,27 @@ const Login = () => {
                     <div className="col-lg-7">
                         <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                         <form className="row" onSubmit={handleSubmit}>
-                            <div className="form-group col-12">
-                                <label htmlFor="email" className="form-label">Email</label>
+                            <div className="form-group col-12 mt-3">
+                                <label htmlFor="username" className="form-label">Username</label>
                                 <input
-                                    type="email"
-                                    id="email"
-                                    className="form-control"
-                                    value={email}
-                                    onChange={handleEmailInput}
+                                    type="text"
+                                    id="username"
+                                    className="form-control mt-1"
+                                    value={user}
+                                    onChange={handleUserInput}
                                     autoComplete="off"
                                     required
-                                    placeholder="Enter your Email"
+                                    placeholder="Enter your Username"
                                     ref={userRef}
                                 />
                             </div>
 
-                            <div className="form-group col-12">
+                            <div className="form-group col-12 mt-3">
                                 <label htmlFor="password" className="form-label">Password</label>
                                 <input
                                     type="password"
                                     id="password"
-                                    className="form-control"
+                                    className="form-control mt-1"
                                     value={pwd}
                                     onChange={handlePwdInput}
                                     autoComplete="off"
@@ -110,21 +113,26 @@ const Login = () => {
                             </div>
 
                             <div className="text-center">
-                                <button className="btn btn-primary form-button">Submit</button>
+                                <button type="submit" className="btn btn-primary form-button">Submit</button>
                             </div>
+
                         </form>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-12 intro">
-                        <div className="d-sm-flex mt-2 justify-content-center align-items-center text-center lead">
-                            <small className="me-4">Don't have an account ?</small>
-                            <Link to="/register">
-                                <button className="btn btn-primary form-button">Register</button>
-                            </Link>
+
+                        <div className="col-12 mt-3">
+                            <div className="d-sm-flex mt-1 justify-content-center align-items-center text-center lead">
+                                <small className="me-4">Don't have an account ?</small>
+                                <Link to="/register">
+                                    <button className="btn btn-primary form-button">Register</button>
+                                </Link>
+                            </div>
                         </div>
+                        
                     </div>
                 </div>
+
+                <div style={{height: "10vh"}}>
+                </div>
+
             </div>
         </section>
     )

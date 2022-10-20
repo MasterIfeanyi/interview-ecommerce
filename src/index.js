@@ -7,12 +7,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // redux store
-import { setupStore } from './app/store'
+import { store } from './app/store';
 
 // provide the store to the entire app
 import { Provider } from 'react-redux';
-
-const store = setupStore({});
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
