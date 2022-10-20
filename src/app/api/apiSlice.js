@@ -4,8 +4,7 @@ import { setCredentials, logOut } from "../../feature/auth/authSlice"
 // attach the accessToken to our request
 const baseQuery = fetchBaseQuery({
     // back-end url
-    // baseUrl: "https://ifeanyi-bank-backend.glitch.me/", 
-    baseUrl: "http://localhost:4000", 
+    baseUrl: "https://ifeanyi-ecommerce.glitch.me/", 
     // send cookie with every request
     credentials: "include", 
     prepareHeaders: (headers, { getState }) => {
