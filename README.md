@@ -8,9 +8,19 @@ This repository is a solution to interview test.
 
 To install this project on your local machine 
 
-1. Git clone
+1. Git Clone
+
+Clone the url of the Git Repo
+
+```shell
+
+git clone <url>
+
+```
 
 2. Install 
+
+To install the project dependencies
 
 ```shell
 npm install my-project
@@ -20,6 +30,8 @@ cd my-project
 ```
 
 3. Start
+
+To start the project run
 
 ```shell
 
