@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaHistory, FaRegCreditCard, FaUsps } from "react-icons/fa"
+import {  FaPen } from "react-icons/fa"
 import { Link } from "react-router-dom"
 
 const Account = ({ each }) => {
@@ -15,7 +15,7 @@ const Account = ({ each }) => {
             <div className="d-sm-flex justify-content-center align-items-center">
                 <Link to={`/update/${each._id}`}>
                     <button className="btn btn-primary me-2 mb-2 mb-sm-0 form-button">
-                        <FaRegCreditCard /> Update
+                        <FaPen /> Update
                     </button>
                 </Link>
             </div>

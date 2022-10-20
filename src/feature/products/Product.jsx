@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Item from './Item';
 import Button from '../../components/Button';
 import { FaArrowRight, FaArrowLeft, FaSearch } from "react-icons/fa";

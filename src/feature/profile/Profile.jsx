@@ -1,7 +1,5 @@
 import { useSelector } from 'react-redux/es/exports'
 import Account from './Account';
-import Button from '../../components/Button';
-import { FaArrowRight, FaArrowLeft, FaSearch } from "react-icons/fa";
 import { useGetProfileQuery } from "./profileApiSlice";
 import { selectCurrentUser } from '../auth/authSlice';
 import { useParams } from "react-router-dom";
